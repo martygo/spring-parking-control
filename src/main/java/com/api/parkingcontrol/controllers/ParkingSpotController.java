@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
