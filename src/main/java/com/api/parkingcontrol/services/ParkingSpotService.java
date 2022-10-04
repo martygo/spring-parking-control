@@ -1,5 +1,9 @@
 package com.api.parkingcontrol.services;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +22,19 @@ public class ParkingSpotService {
     @Transactional
     public ParkingSpotModel save(ParkingSpotModel parkingSpotModel) {
         return parkingSpotRepository.save(parkingSpotModel);
+    }
+
+    public List<ParkingSpotModel> findAll() {
+        return parkingSpotRepository.findAll();
+    }
+
+    public Optional<ParkingSpotModel> findOne(UUID id) {
+        return parkingSpotRepository.findById(id);
+    }
+
+    @Transactional
+    public void delete(ParkingSpotModel parkingSpotModel) {
+        parkingSpotRepository.delete(parkingSpotModel);
     }
 
     public boolean existsByLicensePlateCar(String licensePlateCar) {
