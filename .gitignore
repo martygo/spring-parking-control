@@ -31,3 +31,21 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Some additional ignores (sort later)
+*.DS_Store
+.classpath
+.project
+.settings
+bin
+build
+target
+dependency-reduced-pom.xml
+*.sublime-*
+/scratch
+.gradle
+README.html
+*.iml
+.idea
+.exercism
+env.properties
