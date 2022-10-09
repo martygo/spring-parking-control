@@ -1,27 +1,34 @@
-package com.api.parkingcontrol.services;
+package com.api.parkingcontrol.parkingspot;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import com.api.parkingcontrol.configs.exception.domain.DomainException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.api.parkingcontrol.models.ParkingSpotModel;
-import com.api.parkingcontrol.repositories.ParkingSpotRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ParkingSpotService {
     final ParkingSpotRepository parkingSpotRepository;
 
-    public ParkingSpotService(ParkingSpotRepository parkingSpotRepository) {
-        this.parkingSpotRepository = parkingSpotRepository;
-    }
-
     @Transactional
     public ParkingSpotModel save(ParkingSpotModel parkingSpotModel) {
+        if (existsByLicensePlateCar(parkingSpotModel.getLicensePlateCar()))
+            throw new DomainException("License plate car already parked");
+
+        if (existsByParkingSpotNumber(parkingSpotModel.getParkingSpotNumber()))
+            throw new DomainException("Parking spot number already parked");
+
+        if (existsByApartmentAndBlock(parkingSpotModel.getApartment(), parkingSpotModel.getBlock()))
+            throw new DomainException("Apartment and block already parked");
+
         return parkingSpotRepository.save(parkingSpotModel);
     }
 
